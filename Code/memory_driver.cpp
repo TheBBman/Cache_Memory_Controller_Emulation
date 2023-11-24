@@ -2,8 +2,8 @@
 #include <iostream>
 #include <cstring>
 #include <sstream>
-#include <iostream>
 #include <vector>
+#include <string>
 #include "cache.h"
 using namespace std;
 
@@ -59,7 +59,6 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
     cache myCache;
     int myMem[MEM_SIZE]; 
 
-
 	int traceCounter = 0;
 	bool cur_MemR; 
 	bool cur_MemW; 
@@ -74,7 +73,10 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 		cur_data = myTrace[traceCounter].data;
 		cur_adr = myTrace[traceCounter].adr;
 		traceCounter += 1;
-		myCache.controller (cur_MemR, cur_MemW, &cur_data, cur_adr, myMem); // in your memory controller you need to implement your FSM, LW, SW, and MM. 
+		// Development assistance statements
+		string status = cur_MemR ? "Load data from Memory Location " + to_string(cur_adr) : "Store data " + to_string(cur_data) + " to Memory Location " + to_string(cur_adr);
+		cout << status << endl;
+		myCache.controller(cur_MemR, cur_MemW, cur_data, cur_adr, myMem);
 	}
 	
 	float L1_miss_rate, L2_miss_rate, AAT; 

@@ -16,36 +16,38 @@ using namespace std;
 
 struct cacheBlock
 {
-	int tag; // you need to compute offset and index to find the tag.
-	int lru_position; // for SA only
-	int data; // the actual data stored in the cache/memory
+	int tag; 			// you need to compute offset and index to find the tag.
+	int lru_position; 	// for SA only
+	int data[4]; 		// the actual data stored in the cache/memory
 	bool valid;
-	// add more things here if needed
 };
 
 struct Stat
 {
 	int missL1; 
+	int missVic;
 	int missL2; 
 	int accL1;
-	int accL2;
 	int accVic;
-	int missVic;
+	int accL2;
 	// add more stat if needed. Don't forget to initialize!
 };
 
-class cache {
+class cache 
+{
 private:
-	cacheBlock L1[L1_CACHE_SETS]; // 1 set per row.
-	cacheBlock L2[L2_CACHE_SETS][L2_CACHE_WAYS]; // x ways per row 
-	// Add your Victim cache here ...
-	
+	cacheBlock L1[L1_CACHE_SETS]; 
+	cacheBlock victim[VICTIM_SIZE];
+	cacheBlock L2[L2_CACHE_SETS][L2_CACHE_WAYS]; 
+
 	Stat myStat;
-	// add more things here
+
 public:
 	cache();
-	void controller(bool MemR, bool MemW, int* data, int adr, int* myMem);
-	// add more functions here ...	
+	void controller(bool MemR, bool MemW, int data, int addr, int* myMem);
+	bool search_L1(int addr);
+	bool search_victim(int addr, int MemR);
+	bool search_L2(int addr, int MemR);
 };
 
 
