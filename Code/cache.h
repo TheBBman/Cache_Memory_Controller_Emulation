@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <tuple>
 using namespace std;
 
 #define L1_CACHE_SETS 16
@@ -18,7 +19,6 @@ struct cacheBlock
 {
 	int tag; 			// you need to compute offset and index to find the tag.
 	int lru_position; 	// for SA only
-	int data[4]; 		// the actual data stored in the cache/memory
 	bool valid;
 };
 
@@ -45,9 +45,11 @@ private:
 public:
 	cache();
 	void controller(bool MemR, bool MemW, int data, int addr, int* myMem);
-	bool search_L1(int addr);
+	bool search_L1(int addr, int MemR);
 	bool search_victim(int addr, int MemR);
 	bool search_L2(int addr, int MemR);
+	void insert_L1(int addr);
+	std::tuple<float, float, float> get_Stats();
 };
 
 

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <tuple>
 #include "cache.h"
 using namespace std;
 
@@ -79,9 +80,13 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 		myCache.controller(cur_MemR, cur_MemW, cur_data, cur_adr, myMem);
 	}
 	
-	float L1_miss_rate, L2_miss_rate, AAT; 
-	//compute the stats here:
+	float L1_miss_rate, L2_miss_rate, AAT; 	
 
+	float L1, victim, L2;
+	
+	tie(L1, victim, L2) = myCache.get_Stats();
+
+	
 
 	cout<< "(" << L1_miss_rate<<","<<L2_miss_rate<<","<<AAT<<")"<<endl;
 
