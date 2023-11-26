@@ -50,7 +50,7 @@ bool cache::search_L1(int addr, int MemR)	//Done
 bool cache::search_victim(int addr, int MemR) //Done?
 {
 	int tag = addr/4;
-	int hit = -2;
+	int hit = -1;
 	if (MemR) 
 		this->myStat.accVic++;
     for (int i = 0; i < VICTIM_SIZE; i++) {
@@ -62,7 +62,7 @@ bool cache::search_victim(int addr, int MemR) //Done?
 		}
 	}
 	// Cache hit, update LRU
-	if (hit+1) {
+	if (hit > -1) {
 		for (int i = 0; i < VICTIM_SIZE; i++) {
 			if (this->victim[i].valid) 
 				this->victim[i].lru_position++;
@@ -82,7 +82,7 @@ bool cache::search_L2(int addr, int MemR)	//Done?
 {
     int tag = addr/64;
 	int index = (addr-64*tag)/4;
-	int hit = -2;
+	int hit = -1;
 	if (MemR)
 		this->myStat.accL2++;
 	for (int i = 0; i < 8; i++) {
@@ -94,7 +94,7 @@ bool cache::search_L2(int addr, int MemR)	//Done?
 		}
 	}
 	// Cache hit, update LRU
-	if (hit+1) {
+	if (hit > -1) {
 		for (int i = 0; i < VICTIM_SIZE; i++) {
 			if (this->L2[index][i].valid)
 				this->L2[index][i].lru_position++;
@@ -121,7 +121,7 @@ void cache::insert_L1(int addr)
 	// If someone was kicked from L1, insert them to victim
 	if (kicked_L1_tag) {
 		int kicked_victim_tag = -1;
-		int hit = -2;
+		int hit = -1;
 		int LR_victim = 0;
 		for (int i = 0; i < 4; i++) {
 			if (this->victim[i].valid)
@@ -133,7 +133,7 @@ void cache::insert_L1(int addr)
 				LR_victim = i;
 		}
 		// Empty spot available
-		if (hit+1) {
+		if (hit > -1) {
 			this->victim[hit].tag = kicked_L1_tag;
 			this->victim[hit].lru_position = 0;
 			this->victim[hit].valid = true;
@@ -146,7 +146,7 @@ void cache::insert_L1(int addr)
 			this->victim[LR_victim].lru_position = 0;
 		}
 		// If someone was kicked from victim, insert to L2
-		if (kicked_victim_tag) {
+		if (kicked_victim_tag > -1) {
 			int tag = kicked_victim_tag/16;
 			int index = kicked_victim_tag - 16*tag;
 			int hit = -2;
@@ -169,5 +169,5 @@ void cache::insert_L1(int addr)
 }
 
 std::tuple<float, float, float> cache::get_Stats() {
-	return {this->myStat.missL1/this->myStat.accL1, this->myStat.missVic/this->myStat.accVic, this->myStat.missL2/this->myStat.accL2};
+	return {(float)this->myStat.missL1/this->myStat.accL1, (float)this->myStat.missVic/this->myStat.accVic, (float)this->myStat.missL2/this->myStat.accL2};
 }

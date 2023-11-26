@@ -75,20 +75,18 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 		cur_adr = myTrace[traceCounter].adr;
 		traceCounter += 1;
 		// Development assistance statements
-		string status = cur_MemR ? "Load data from Memory Location " + to_string(cur_adr) : "Store data " + to_string(cur_data) + " to Memory Location " + to_string(cur_adr);
-		cout << status << endl;
+		//string status = cur_MemR ? "Load data from Memory Location " + to_string(cur_adr) : "Store data " + to_string(cur_data) + " to Memory Location " + to_string(cur_adr);
+		//cout << status << endl;
 		myCache.controller(cur_MemR, cur_MemW, cur_data, cur_adr, myMem);
 	}
 	
-	float L1_miss_rate, L2_miss_rate, AAT; 	
-
-	float L1, victim, L2;
+	float L1_miss_rate, victim_miss_rate, L2_miss_rate, AAT; 	
 	
-	tie(L1, victim, L2) = myCache.get_Stats();
+	tie(L1_miss_rate, victim_miss_rate, L2_miss_rate) = myCache.get_Stats();
 
-	
+	AAT = (1-L1_miss_rate)*1 + L1_miss_rate*( (1-victim_miss_rate)*1 + victim_miss_rate*( (1-L2_miss_rate)*8 + L2_miss_rate*100) );
 
-	cout<< "(" << L1_miss_rate<<","<<L2_miss_rate<<","<<AAT<<")"<<endl;
+	cout << "(" << L1_miss_rate << "," << victim_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
 
 	// closing the file
 	fin.close();

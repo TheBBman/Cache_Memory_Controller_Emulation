@@ -26,7 +26,7 @@ struct Stat
 {
 	int missL1; 
 	int missVic;
-	int missL2; 
+	int missL2;
 	int accL1;
 	int accVic;
 	int accL2;
