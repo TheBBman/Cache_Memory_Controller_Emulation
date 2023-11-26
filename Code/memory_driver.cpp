@@ -81,8 +81,8 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 
 	AAT = 1 + L1_miss_rate*( 1 + victim_miss_rate*( 8 + L2_miss_rate*100) );
 
-	//cout << setprecision(10) << "(" << L1_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
-	cout << "bitch wtf" << endl;
+	cout << setprecision(10) << "(" << L1_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
+	//cout << "bitch wtf" << endl;
 
 	// closing the file
 	fin.close();
