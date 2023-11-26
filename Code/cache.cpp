@@ -168,6 +168,6 @@ void cache::insert_L1(int addr)
 	}
 }
 
-std::tuple<float, float, float> cache::get_Stats() {
-	return {(float)this->myStat.missL1/this->myStat.accL1, (float)this->myStat.missVic/this->myStat.accVic, (float)this->myStat.missL2/this->myStat.accL2};
+std::tuple<double, double, double> cache::get_Stats() {
+	return {this->myStat.missL1/this->myStat.accL1, this->myStat.missVic/this->myStat.accVic, this->myStat.missL2/this->myStat.accL2};
 }

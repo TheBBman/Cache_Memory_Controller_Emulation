@@ -24,12 +24,12 @@ struct cacheBlock
 
 struct Stat
 {
-	int missL1; 
-	int missVic;
-	int missL2;
-	int accL1;
-	int accVic;
-	int accL2;
+	double missL1; 
+	double missVic;
+	double missL2;
+	double accL1;
+	double accVic;
+	double accL2;
 	// add more stat if needed. Don't forget to initialize!
 };
 
@@ -49,7 +49,7 @@ public:
 	bool search_victim(int addr, int MemR);
 	bool search_L2(int addr, int MemR);
 	void insert_L1(int addr);
-	std::tuple<float, float, float> get_Stats();
+	std::tuple<double, double, double> get_Stats();
 };
 
 

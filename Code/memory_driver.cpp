@@ -81,11 +81,11 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 		myCache.controller(cur_MemR, cur_MemW, cur_data, cur_adr, myMem);
 	}
 	
-	float L1_miss_rate, victim_miss_rate, L2_miss_rate, AAT; 	
+	double L1_miss_rate, victim_miss_rate, L2_miss_rate, AAT; 	
 	
 	tie(L1_miss_rate, victim_miss_rate, L2_miss_rate) = myCache.get_Stats();
 
-	AAT = (1-L1_miss_rate)*1 + L1_miss_rate*( (1-victim_miss_rate)*1 + victim_miss_rate*( (1-L2_miss_rate)*8 + L2_miss_rate*100) );
+	AAT = 1 + L1_miss_rate*( 1 + victim_miss_rate*( 8 + L2_miss_rate*100) );
 
 	//cout << "(" << L1_miss_rate << "," << victim_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
 	cout << setprecision(10) << "(" << L1_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
