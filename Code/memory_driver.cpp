@@ -16,10 +16,6 @@ struct trace
 	int data; 
 };
 
-/*
-Either implement your memory_controller here or use a separate .cpp/.c file for memory_controller and all the other functions inside it (e.g., LW, SW, Search, Evict, etc.)
-*/
-
 int main (int argc, char* argv[]) // the program runs like this: ./program <filename> <mode>
 {
 	// input file (i.e., test.txt)
@@ -63,26 +59,24 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 	bool cur_MemR; 
 	int cur_adr;
 
-	// this is the main loop of the code
+	// Removed all the unneeded bloat for this coding assignment
 	while(traceCounter < TraceSize){
 		
 		cur_MemR = myTrace[traceCounter].MemR;
 		cur_adr = myTrace[traceCounter].adr;
 		traceCounter += 1;
-		// Development assistance statements
-		//string status = cur_MemR ? "Load data from Memory Location " + to_string(cur_adr) : "Store data " + to_string(cur_data) + " to Memory Location " + to_string(cur_adr);
-		//cout << status << endl;
 		myCache.controller(cur_MemR, cur_adr);
 	}
 	
 	double L1_miss_rate, victim_miss_rate, L2_miss_rate, AAT; 	
 	
+	// Get stats from cache object using stats function
 	tie(L1_miss_rate, victim_miss_rate, L2_miss_rate) = myCache.get_Stats();
 
+	// AAT Formula
 	AAT = 1 + L1_miss_rate*( 1 + victim_miss_rate*( 8 + L2_miss_rate*100) );
 
 	cout << setprecision(10) << "(" << L1_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
-	//cout << "bitch wtf" << endl;
 
 	// closing the file
 	fin.close();

@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string>
 #include <tuple>
-#include <iomanip>
 using namespace std;
 
 #define L1_CACHE_SETS 16
@@ -25,13 +24,13 @@ struct cacheBlock
 
 struct Stat
 {
+	// Made these double for floating point operation
 	double missL1; 
 	double missVic;
 	double missL2;
 	double accL1;
 	double accVic;
 	double accL2;
-	// add more stat if needed. Don't forget to initialize!
 };
 
 class cache 
@@ -40,16 +39,15 @@ private:
 	cacheBlock L1[L1_CACHE_SETS]; 
 	cacheBlock victim[VICTIM_SIZE];
 	cacheBlock L2[L2_CACHE_SETS][L2_CACHE_WAYS]; 
-
 	Stat myStat;
 
 public:
 	cache();
-	void controller(bool MemR, int addr);
-	bool search_L1(int addr, int MemR);
-	bool search_victim(int addr, int MemR);
-	bool search_L2(int addr, int MemR);
-	void insert_L1(int addr);
+	void controller(bool MemR, int addr);			// Main Loop
+	bool search_L1(int addr, int MemR);				// Search if addr in L1, update LRU
+	bool search_victim(int addr, int MemR);			// Search if addr in victim, update LRU
+	bool search_L2(int addr, int MemR);				// Search if addr in L2, update LRU
+	void insert_L1(int addr);						// Insert new addr into L1, evict downwards
 	std::tuple<double, double, double> get_Stats();
 };
 
