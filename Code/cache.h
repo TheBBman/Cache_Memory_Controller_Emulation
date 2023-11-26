@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string>
 #include <tuple>
+#include <iomanip>
 using namespace std;
 
 #define L1_CACHE_SETS 16
