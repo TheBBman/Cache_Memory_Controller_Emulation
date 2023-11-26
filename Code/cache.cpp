@@ -119,7 +119,7 @@ void cache::insert_L1(int addr)
 	this->L1[index].tag = tag;
 	this->L1[index].valid = true;
 	// If someone was kicked from L1, insert them to victim
-	if (kicked_L1_tag) {
+	if (kicked_L1_tag > -1) {
 		int kicked_victim_tag = -1;
 		int hit = -1;
 		int LR_victim = 0;
