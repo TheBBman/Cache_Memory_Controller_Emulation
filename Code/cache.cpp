@@ -19,7 +19,7 @@ cache::cache()
 	
 }
 
-void cache::controller(bool MemR, bool MemW, int data, int addr, int* myMem)
+void cache::controller(bool MemR, int addr)
 {
 	if (search_L1(addr, MemR)) {
 		return;

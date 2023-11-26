@@ -45,7 +45,7 @@ private:
 
 public:
 	cache();
-	void controller(bool MemR, bool MemW, int data, int addr, int* myMem);
+	void controller(bool MemR, int addr);
 	bool search_L1(int addr, int MemR);
 	bool search_victim(int addr, int MemR);
 	bool search_L2(int addr, int MemR);

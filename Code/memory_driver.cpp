@@ -59,26 +59,21 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 
 	// Defining cache and stat
     cache myCache;
-    int myMem[MEM_SIZE]; 
 
 	int traceCounter = 0;
 	bool cur_MemR; 
-	bool cur_MemW; 
 	int cur_adr;
-	int cur_data;
 
 	// this is the main loop of the code
 	while(traceCounter < TraceSize){
 		
 		cur_MemR = myTrace[traceCounter].MemR;
-		cur_MemW = myTrace[traceCounter].MemW;
-		cur_data = myTrace[traceCounter].data;
 		cur_adr = myTrace[traceCounter].adr;
 		traceCounter += 1;
 		// Development assistance statements
 		//string status = cur_MemR ? "Load data from Memory Location " + to_string(cur_adr) : "Store data " + to_string(cur_data) + " to Memory Location " + to_string(cur_adr);
 		//cout << status << endl;
-		myCache.controller(cur_MemR, cur_MemW, cur_data, cur_adr, myMem);
+		myCache.controller(cur_MemR, cur_adr);
 	}
 	
 	double L1_miss_rate, victim_miss_rate, L2_miss_rate, AAT; 	
@@ -87,8 +82,8 @@ int main (int argc, char* argv[]) // the program runs like this: ./program <file
 
 	AAT = 1 + L1_miss_rate*( 1 + victim_miss_rate*( 8 + L2_miss_rate*100) );
 
-	//cout << "(" << L1_miss_rate << "," << victim_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
-	cout << setprecision(10) << "(" << L1_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
+	//cout << setprecision(10) << "(" << L1_miss_rate << "," << L2_miss_rate << "," << AAT << ")" << endl;
+	cout << "bitch wtf" << endl;
 
 	// closing the file
 	fin.close();
